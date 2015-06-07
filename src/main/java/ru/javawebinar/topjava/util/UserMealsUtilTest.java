@@ -72,4 +72,39 @@ public class UserMealsUtilTest {
         }
     }
 
+
+    @Test
+    public void testGetFilteredMealsWithExceeded_Loop_notEmpty() throws Exception {
+
+        List<UserMealWithExceed> filteredMealsWithExceeded = UserMealsUtil.getFilteredMealsWithExceeded_Loops(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 1000);
+
+        assertTrue(!filteredMealsWithExceeded.isEmpty());
+    }
+
+    @Test
+    public void testGetFilteredMealsWithExceeded__Loop_haveMealsForRightTimePeriod() throws Exception {
+
+        List<UserMealWithExceed> filteredMealsWithExceeded = UserMealsUtil.getFilteredMealsWithExceeded_Loops(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 1000);
+
+        for (UserMealWithExceed meal : filteredMealsWithExceeded) {
+            assertTrue(meal.getDateTime().toLocalTime().isAfter(LocalTime.of(7, 0)) && meal.getDateTime().toLocalTime().isBefore(LocalTime.of(12, 0)));
+        }
+    }
+
+    @Test
+    public void testGetFilteredMealsWithExceeded__Loop_haveRightExceedFlag() throws Exception {
+
+        List<UserMealWithExceed> filteredMealsWithExceeded = UserMealsUtil.getFilteredMealsWithExceeded_Loops(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 1000);
+        for (UserMealWithExceed meal : filteredMealsWithExceeded) {
+            if (meal.getDateTime().toLocalDate() == LocalDate.of(2015, Month.MAY, 28)) {
+                assertTrue(!meal.isExceed());
+            } else if (meal.getDateTime().toLocalDate() == LocalDate.of(2015, Month.MAY, 29)) {
+                assertTrue(meal.isExceed());
+            } else if (meal.getDateTime().toLocalDate() == LocalDate.of(2015, Month.MAY, 30)) {
+                assertTrue(meal.isExceed());
+            } else if (meal.getDateTime().toLocalDate() == LocalDate.of(2015, Month.MAY, 31)) {
+                assertTrue(!meal.isExceed());
+            }
+        }
+    }
 }

@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * GKislin
@@ -17,21 +19,156 @@ public class UserMealsUtil {
     public static void main(String[] args) {
         List<UserMeal> mealList = Arrays.asList(
                 //LocalDateTime.of(int year,Month month,int dayOfMonth,int hour,int minute)
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Обед", 444),
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 30, 20, 0), "Ужин", 656),
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 28, 10, 0), "Завтрак", 125),
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 31, 10, 0), "Завтрак", 63),
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 29, 13, 0), "Обед", 123),
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 222),
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 29, 10, 0), "Завтрак", 654),
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 28, 13, 0), "Обед", 333),
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 29, 20, 0), "Ужин", 500),
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Обед", 345),
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 456),
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 28, 20, 0), "Ужин", 500)
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 444),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 656),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 125),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 63),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 123),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 222),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 654),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 444),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 656),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 125),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 63),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 123),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 222),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 654),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 444),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 656),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 125),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 63),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 123),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 222),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 654),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 444),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 656),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 125),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 63),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 123),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 222),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 654),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 444),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 656),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 125),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 63),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 123),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 222),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 654),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 444),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 656),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 125),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 63),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 123),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 222),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 654),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 444),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 656),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 125),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 63),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 123),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 222),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 654),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 444),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 656),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 125),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 63),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 123),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 222),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 654),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 444),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 656),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 125),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 63),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 123),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 222),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 654),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 444),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 656),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 125),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 63),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 123),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 222),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 654),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 656),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 125),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 63),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 123),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 222),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 654),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 444),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 656),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 125),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 63),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 123),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 222),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 654),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 656),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 125),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 63),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 123),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 222),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 654),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 444),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 656),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 125),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 63),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 123),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 222),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 654),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 656),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 125),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 63),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 123),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 222),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 654),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 444),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 656),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 125),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 63),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 123),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 222),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 654),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 656),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 125),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 63),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 123),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 222),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 654),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 444),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 656),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 125),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 63),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 123),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 222),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 654),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 656),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 125),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 63),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 123),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 222),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 654),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 444),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 656),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 125),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 63),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 13, 0), "Обед", 123),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 20, 0), "Ужин", 222),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, new Random().nextInt(28) + 1, 10, 0), "Завтрак", 654)
+
         );
-        List<UserMealWithExceed> filteredMealsWithExceeded = getFilteredMealsWithExceeded(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 1000);
-        System.out.println(filteredMealsWithExceeded);
+
+        long t1 = System.nanoTime();
+        getFilteredMealsWithExceeded(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 1000);
+        long t2 = System.nanoTime();
+        getFilteredMealsWithExceeded_Loops(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 1000);
+        long t3 = System.nanoTime();
+
+        long millis1 = TimeUnit.NANOSECONDS.toMillis(t2 - t1);
+        long millis2 = TimeUnit.NANOSECONDS.toMillis(t3 - t2);
+
+        System.out.println(String.format("sequential sort took: %d ms", millis1));
+        System.out.println(String.format("sequential sort took: %d ms", millis2));
+
     }
 
     public static List<UserMealWithExceed> getFilteredMealsWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
@@ -73,11 +210,30 @@ public class UserMealsUtil {
         List<UserMealWithExceed> userMealsWithExceedFilteredList = new ArrayList<>();
 
         for (UserMealWithExceed userMealWithExceed : userMealWithExceedsList) {
-            if(TimeUtil.isBetween(userMealWithExceed.getDateTime().toLocalTime(), startTime, endTime)) {
-            userMealsWithExceedFilteredList.add(userMealWithExceed);
-        }
+            if (TimeUtil.isBetween(userMealWithExceed.getDateTime().toLocalTime(), startTime, endTime)) {
+                userMealsWithExceedFilteredList.add(userMealWithExceed);
+            }
         }
 
         return userMealsWithExceedFilteredList;
     }
+
+    public static List<UserMealWithExceed> getFilteredMealsWithExceeded_Loops(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesADay) {
+        List<UserMealWithExceed> result = new ArrayList<>();
+
+        for (UserMeal userMeal : mealList) {
+            // filter all meals by specified time period
+            if (TimeUtil.isBetween(userMeal.getDateTime().toLocalTime(), startTime, endTime)) {
+                int calories = 0;
+                // loop through all meals to find the same day meals to calculate calories
+                for (UserMeal userMealInner : mealList) {
+                    if (userMealInner.getDateTime().toLocalDate().equals(userMeal.getDateTime().toLocalDate()))
+                        calories += userMealInner.getCalories();
+                }
+                result.add(new UserMealWithExceed(userMeal.getDateTime(), userMeal.getDescription(), userMeal.getCalories(), calories > caloriesADay));
+            }
+        }
+        return result;
+    }
 }
+
