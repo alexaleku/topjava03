@@ -60,15 +60,16 @@ public class UserMealsUtilTest {
 
         List<UserMealWithExceed> filteredMealsWithExceeded = UserMealsUtil.getFilteredMealsWithExceeded(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 1000);
         for (UserMealWithExceed meal : filteredMealsWithExceeded) {
-          if (meal.getDateTime().toLocalDate() == LocalDate.of(2015, Month.MAY, 28)) {
-              assertTrue(!meal.isExceed());
-          } else if (meal.getDateTime().toLocalDate() == LocalDate.of(2015, Month.MAY, 29)) {
-              assertTrue(meal.isExceed());
-          } else if (meal.getDateTime().toLocalDate() == LocalDate.of(2015, Month.MAY, 30)) {
-              assertTrue(meal.isExceed());
-          } else if (meal.getDateTime().toLocalDate() == LocalDate.of(2015, Month.MAY, 31)) {
-            assertTrue(!meal.isExceed());
-        }
+            System.out.println(meal.toString());
+            if (meal.getDateTime().toLocalDate().equals(LocalDate.of(2015, Month.MAY, 28))) {
+                assertTrue(!meal.isExceed());
+            } else if (meal.getDateTime().toLocalDate().equals(LocalDate.of(2015, Month.MAY, 29))) {
+                assertTrue(meal.isExceed());
+            } else if (meal.getDateTime().toLocalDate().equals(LocalDate.of(2015, Month.MAY, 30))) {
+                assertTrue(meal.isExceed());
+            } else if (meal.getDateTime().toLocalDate().equals(LocalDate.of(2015, Month.MAY, 31))) {
+                assertTrue(!meal.isExceed());
+            }
         }
     }
 
@@ -96,13 +97,16 @@ public class UserMealsUtilTest {
 
         List<UserMealWithExceed> filteredMealsWithExceeded = UserMealsUtil.getFilteredMealsWithExceeded_Loops(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 1000);
         for (UserMealWithExceed meal : filteredMealsWithExceeded) {
-            if (meal.getDateTime().toLocalDate() == LocalDate.of(2015, Month.MAY, 28)) {
+            if (meal.getDateTime().toLocalDate().equals(LocalDate.of(2015, Month.MAY, 28))) {
                 assertTrue(!meal.isExceed());
-            } else if (meal.getDateTime().toLocalDate() == LocalDate.of(2015, Month.MAY, 29)) {
+            }
+            if (meal.getDateTime().toLocalDate().equals(LocalDate.of(2015, Month.MAY, 29))) {
                 assertTrue(meal.isExceed());
-            } else if (meal.getDateTime().toLocalDate() == LocalDate.of(2015, Month.MAY, 30)) {
+            }
+            if (meal.getDateTime().toLocalDate().equals(LocalDate.of(2015, Month.MAY, 30))) {
                 assertTrue(meal.isExceed());
-            } else if (meal.getDateTime().toLocalDate() == LocalDate.of(2015, Month.MAY, 31)) {
+            }
+            if (meal.getDateTime().toLocalDate().equals(LocalDate.of(2015, Month.MAY, 31))) {
                 assertTrue(!meal.isExceed());
             }
         }
